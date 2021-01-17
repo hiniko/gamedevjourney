@@ -514,8 +514,6 @@ export default class GameBoardDisplay extends Phaser.GameObjects.GameObject {
     if(bottom) pos.push({ side: Position.Bottom, boardIdx: bottomIdx})
     if(left) pos.push({ side: Position.Left, boardIdx: leftIdx})
 
-    console.log(pos)
-
     return pos
   }
 

@@ -8,12 +8,20 @@ interface GameUIConfig {
     height: integer
 }
 
+interface PreviousSelection {
+    idx: integer
+    value: integer
+    op: OpType
+}
+
 export default class GameUI extends Phaser.GameObjects.Container {
 
     config: GameUIConfig
     events: GameEvents
     targetText: Phaser.GameObjects.Text
     operationsText: Phaser.GameObjects.Text
+    selectionHistory: PreviousSelection[] = []
+    selectionHistoryIdxs: integer[] = []
 
     constructor(config: GameUIConfig) {
         super(config.scene)
@@ -31,24 +39,52 @@ export default class GameUI extends Phaser.GameObjects.Container {
         this.operationsText.setOrigin(0.5)
 
         this.events.on(GameEvents.LOGIC_NEW_TARGET, this.onTargetUpdate, this)
+        this.events.on(GameEvents.LOGIC_ACCEPT_SOLUTION, this.clearOperationsText, this)
+        this.events.on(GameEvents.LOGIC_REJECT_SOLUTION, this.clearOperationsText, this)
+        this.events.on(GameEvents.LOGIC_UNSELECTION, this.onUnselection, this)
         this.events.on(GameEvents.LOGIC_VALID_SELECTION, this.onValidSelection, this)
-        this.events.on(GameEvents.LOGIC_ACCEPT_SELECTION, this.onAcceptSolution, this)
 
         this.add(this.targetText)
         this.add(this.operationsText)
     }
 
-    onAcceptSolution() {
+    clearOperationsText() {
         this.operationsText.setText("")
+        this.selectionHistory.length = 0
     }
 
-    onValidSelection(idx: integer, number: integer, op: OpType) {
-        let symbol = ""
-        switch(op) {
-            case OpType.Add: symbol = " +"; break
-            case OpType.Subtract: symbol = " -"; break
+    onValidSelection(boardIdx: integer, number: integer, op: OpType) {
+        this.selectionHistoryIdxs.unshift(boardIdx)
+        this.selectionHistory[boardIdx] = {
+            idx: boardIdx, 
+            value: number, 
+            op: op
         }
-        this.operationsText.setText(this.operationsText.text + symbol + " " + number)
+        this.buildOpsText()
+    }
+
+
+    onUnselection(dataIdxs: integer[], rejection: Boolean = false) { 
+        this.selectionHistoryIdxs.splice(0, dataIdxs.length)
+        this.selectionHistory = this.selectionHistory.filter(prev => this.selectionHistoryIdxs.includes(prev.idx))
+        this.buildOpsText()
+    }
+
+    buildOpsText() {
+        let text: string = ""
+        let selections = this.selectionHistory
+        selections.forEach((set) => {
+            if(set.op != null) {
+                let symbol = ""
+                switch(set.op) {
+                    case OpType.Add: symbol = " + "; break
+                    case OpType.Subtract: symbol = " - "; break
+                }
+                text += symbol 
+            }
+            text += set.value
+        }) 
+        this.operationsText.setText(text)
     }
  
     onTargetUpdate(target: integer) {

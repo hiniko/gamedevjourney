@@ -58,4 +58,6 @@ export default class GameEvents extends Phaser.Events.EventEmitter {
   static OPS_PANEL_HIDE = "opsPanelHide"
   static OPS_PANEL_SELECTED = "opsPanelSelected"
 
+  static UI_UPDATE_SOLUTION = "uiUpdateSolution"
+
 }

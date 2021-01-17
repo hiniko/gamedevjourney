@@ -58,8 +58,8 @@ export default class GameBoard extends Phaser.GameObjects.GameObject {
 
   newTargetValue() {
     this.currentAccepted++
-    this.currentMaxValue += Math.round(Math.log(this.currentAccepted) + this.currentAccepted)
-    this.currentTargetValue = Math.round(Math.random() * this.currentMaxValue + 1)
+    this.currentMaxValue = Math.floor(Math.log(this.currentAccepted) + this.currentAccepted)
+    this.currentTargetValue = Math.floor(Math.random() * this.currentMaxValue) + this.currentMaxValue
     this.events.emit(GameEvents.LOGIC_NEW_TARGET, this.currentTargetValue)
   }
 

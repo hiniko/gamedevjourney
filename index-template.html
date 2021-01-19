@@ -16,7 +16,6 @@
       #info {
         width: 720px;
         margin: 10px auto;
-        text-align: center;
       }
 
       #info ul{
@@ -27,12 +26,22 @@
   </head>
   <body>
     <div id="info">
-        Controls:
-        <ul style="list-style: none">
-          <li>Left Click - Select Tile</li>
-          <li>Space Bar - Accept Selection</li>
-          <li>Left Click on earlier selection - Deselect to that tile</li>
+    <h1>Numbers! <em>A simple numbers game</em></h1>
+    <ul>
+      <li>`Left-Click` a tile to select it.</li>
+      <li>
+        <ul>
+          <li>When selected, operations adjacent to tiles will appear. `Left-Click` an operation (+ or -) to perform on
+            the adjacent tile. That tile will become selected and the process repeats</li>
         </ul>
+      </li>
+      <li>When you are happy with your solution press `space` to accept</li>
+      <li>
+        <ul>
+          <li>If your solution is correct, the tiles will be removed and new tiles will drop down from above</li>
+          <li>If your solution is incorrect, the tiles will flash red and deselect</li>
+        </ul>
+      <li>`Left-click` on a previous selection to unslect tiles to that poin</li>
     </div>
     </div>
   </body>

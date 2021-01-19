@@ -19,7 +19,6 @@ The target number, and number tiles increse ad you play!
 * Left click on a previous selection to unslect tiles to that point
 
 # Building yourself 
-
 ```
 npm install
 npm build

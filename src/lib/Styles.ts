@@ -46,9 +46,9 @@ export const UI_TEXT_STYLE_TARGET= {
   // },
 };
 
-export const UI_TEXT_STYLE_OPERATIONS= {
+export const UI_TEXT_STYLE_OPERATIONS = {
   fontFamily: "NunitoExtraBold",
-  fontSize: "32px",
+  fontSize: "24px",
   color: "#FFFFFF",
   // shadow: {
   //   offsetX: 2,

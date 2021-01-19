@@ -56,27 +56,13 @@ export default class NumbersGame extends Phaser.Scene {
 
         this.gameUI.setPosition(
             (this.cameras.main.width / 2) - (this.gameUI.config.width / 2),
-            (this.cameras.main.height / 2) - 250)
+            (this.cameras.main.height / 2) - 350)
 
         this.add.existing(this.boardDisplay.container)
         this.add.existing(this.gameUI)
 
         this.board.popluate()
         this.boardDisplay.assembleBoard()
-
-    //     this.add.shader('RGB Shift Field', 0, 0, 800, 600).setOrigin(0);
-    //     this.add.image(400, 300, 'libs');
-
-    //     const logo = this.add.image(400, 70, 'logo');
-
-    //     this.tweens.add({
-    //         targets: logo,
-    //         y: 350,
-    //         duration: 1500,
-    //         ease: 'Sine.inOut',
-    //         yoyo: true,
-    //         repeat: -1
-    //     })
     }
 
 

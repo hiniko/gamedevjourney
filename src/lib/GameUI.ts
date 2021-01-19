@@ -21,7 +21,7 @@ export default class GameUI extends Phaser.GameObjects.Container {
     targetText: Phaser.GameObjects.Text
     operationsText: Phaser.GameObjects.Text
     selectionHistory: PreviousSelection[] = []
-    selectionHistoryIdxs: integer[] = []
+    selectionHistoryIdxs: Array<integer> = new Array<integer>()
 
     constructor(config: GameUIConfig) {
         super(config.scene)
@@ -33,7 +33,7 @@ export default class GameUI extends Phaser.GameObjects.Container {
         this.height = config.height
         
         this.targetText = new Phaser.GameObjects.Text(config.scene, 0, 0, "0", UI_TEXT_STYLE_TARGET)
-        this.operationsText = new Phaser.GameObjects.Text(config.scene, 0, 50, "", UI_TEXT_STYLE_OPERATIONS)
+        this.operationsText = new Phaser.GameObjects.Text(config.scene, 0, 100, "", {...UI_TEXT_STYLE_OPERATIONS, wordWrap: { width: 450, useAdvancedWrap: true }})
 
         this.targetText.setOrigin(0.5)
         this.operationsText.setOrigin(0.5)
@@ -51,6 +51,7 @@ export default class GameUI extends Phaser.GameObjects.Container {
     clearOperationsText() {
         this.operationsText.setText("")
         this.selectionHistory.length = 0
+        this.selectionHistoryIdxs.length = 0
     }
 
     onValidSelection(boardIdx: integer, number: integer, op: OpType) {
@@ -63,7 +64,6 @@ export default class GameUI extends Phaser.GameObjects.Container {
         this.buildOpsText()
     }
 
-
     onUnselection(dataIdxs: integer[], rejection: Boolean = false) { 
         this.selectionHistoryIdxs.splice(0, dataIdxs.length)
         this.selectionHistory = this.selectionHistory.filter(prev => this.selectionHistoryIdxs.includes(prev.idx))
@@ -72,8 +72,8 @@ export default class GameUI extends Phaser.GameObjects.Container {
 
     buildOpsText() {
         let text: string = ""
-        let selections = this.selectionHistory
-        selections.forEach((set) => {
+        for(let i=this.selectionHistoryIdxs.length-1; i>=0; i--) {
+            let set = this.selectionHistory[this.selectionHistoryIdxs[i]]
             if(set.op != null) {
                 let symbol = ""
                 switch(set.op) {
@@ -83,7 +83,7 @@ export default class GameUI extends Phaser.GameObjects.Container {
                 text += symbol 
             }
             text += set.value
-        }) 
+        }
         this.operationsText.setText(text)
     }
  
@@ -102,7 +102,4 @@ export default class GameUI extends Phaser.GameObjects.Container {
             }
         }) 
     }
-
-
-
 }

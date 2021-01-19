@@ -4,11 +4,12 @@ _A simple maths game_
 # Play it online!
 https://numbers.shermanrose.uk
 
-![](numbers_game.gif)
-
 # Objective
 Add or Subtract numbers to make the target number.
-The target number, and number tiles increse ad you play!
+The target number, and number tiles increase as you play!
+
+![](numbers_game.gif)
+
 
 # Controls
 * `Left-Click` a tile to select it.
